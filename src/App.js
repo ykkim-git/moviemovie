@@ -35,6 +35,7 @@ import "./App.css";
 
 function App() {
   return (
+    // exact={true}: url이 / 일때만 home을 렌더링함.
     <HashRouter>
       <Navigation />
       <Route path="/" exact={true} component={Home} />
