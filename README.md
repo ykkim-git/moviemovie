@@ -220,3 +220,114 @@ Movie.propTypes = {
 
 export default Movie;
 ```
+
+___
+
+## 05/01/2021
+
+### react-router 설치
+**import { HashRouter, Route } from "react-router-dom";**
+
+```js
+in App.js
+1. 설치 후 App.js 에서 화면 렌더링
+
+import React from "react";
+import { HashRouter, Route } from "react-router-dom";  <-- react-router
+import Home from "./routes/Home.js";
+import About from "./routes/About.js";
+import Detail from "./routes/Detail.js";
+import Navigation from "./components/Navigation.js";
+import "./App.css";
+
+function App() {
+  return (
+    // HashRouter (parent node)
+    <HashRouter>
+      <Navigation />
+      <Route path="/" exact={true} component={Home} />
+      <Route path="/about" component={About} />
+      <Route path="/movie/:id" component={Detail} />
+    </HashRouter>
+  );
+}
+
+export default App;
+```
+
+```js
+in Movie.js (영화 리스트)
+2. <a> 태그처럼 클릭 시 pathname과 state를 넘겨준다.
+
+import { Link } from "react-router-dom";
+
+<Link
+  to={
+    {
+      pathname: `/movie/${id}`,
+      state: {
+        year,
+        title,
+        summary,
+        poster,
+        genres
+      }
+    }
+  }
+>
+ <div></div>
+ <img /> 등등..
+</Link>
+```
+
+```js
+in Detail.js (영화 정보 클릭 시 나오는 상세 페이지)
+
+class Detail extends React.Component {
+  componentDidMount() {
+    const { location, history } = this.props;
+    /** 전달받은 props가 없으면 메인페이지로 */
+    if (location.state === undefined) {
+      history.push("/");
+    }
+  }
+  render() {
+    const { location } = this.props;
+    /** 전달받은 props가 있으면 화면 rendering */
+    if (location.state) {
+      return (
+        <div>
+          <!-- 전달받은 state 사용법 location.state.{something} -->
+          <p><span>{location.state.title}</span></p>
+          <img src={location.state.poster} alt={location.state.title} />
+        </div>
+        )
+    } else {
+      return null;
+    }
+  }
+}
+export default Detail;
+```
+
+___
+
+## github pages
+### 설치: npm i gh-pages
+```json
+in package.json
+
+"homepage": "https://ykkim-git.github.io/moviemovie/" <--추가
+
+"sciprt": {
+  "deploy": "gh-pages -d build",
+  "predeploy": "npm run build"  
+}
+
+```
+### 순서
+1. npm run deploy
+2. predeploy 먼저 실행
+3. deploy 실행
+
+> https://{username}.github.io/{project name}/

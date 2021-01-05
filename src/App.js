@@ -1,10 +1,4 @@
-import React from "react";
-import axios from "axios";
-import Movie from "./Movie.js";
-import PropTypes from "prop-types";
-import "./App.css";
-
-
+/**
 class App extends React.Component {
   state = {
     isLoading: true,
@@ -12,11 +6,10 @@ class App extends React.Component {
   };
 
   getMovies = async () => {
-    /** async, await: 이 함수는 비동기 & axios가 끝날때까지 기다렸다가 실행 */
+    // async, await: 이 함수는 비동기 & axios가 끝날때까지 기다렸다가 실행
     // const movies = await axios.get("https://yts-proxy.nomadcoders1.now.sh/list_movies.json");
     // console.log(movies.data.data.movies);
 
-    /** 위 방법 축약 */
     const {
       data: {
         data: { movies },
@@ -30,34 +23,25 @@ class App extends React.Component {
   componentDidMount() {
     this.getMovies();
   }
+  */
 
-  render() {
-    const { isLoading, movies } = this.state;
-    return (
-      <section className="container">
-        {isLoading ? (
-          <div className="loader">
-            <span className="loader__text">Loading ...</span>
-          </div>
-        ) : (
-          movies.map((movie) => {
-            return (
-              <Movie
-                key={movie.id}
-                id={movie.id}
-                year={movie.year}
-                title={movie.title}
-                summary={movie.summary}
-                poster={movie.medium_cover_image}
-                genres={movie.genres}
-              />
-            );
-          })
-        )}
-      </section>
-    );
-  }
+import React from "react";
+import { HashRouter, Route } from "react-router-dom";
+import Home from "./routes/Home.js";
+import About from "./routes/About.js";
+import Detail from "./routes/Detail.js";
+import Navigation from "./components/Navigation.js";
+import "./App.css";
+
+function App() {
+  return (
+    <HashRouter>
+      <Navigation />
+      <Route path="/" exact={true} component={Home} />
+      <Route path="/about" component={About} />
+      <Route path="/movie/:id" component={Detail} />
+    </HashRouter>
+  );
 }
-export default App;
 
-// https://yts-proxy.nomadcoders1.now.sh/list_movies.json
+export default App;
