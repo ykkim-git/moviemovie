@@ -27,7 +27,7 @@ class Home extends React.Component {
       <section className="container">
         {isLoading ? (
           <div className="loader">
-            <span className="loader__text">Loading...</span>
+            <img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="loading" />
           </div>
         ) : (
           <div className="movies">
